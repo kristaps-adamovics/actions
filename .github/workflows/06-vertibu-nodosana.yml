@@ -1,0 +1,36 @@
+name: 06-vertibu-nodosana-starp-darbiem
+on:
+  workflow_dispatch:
+
+jobs:
+  producer:
+    runs-on: ubuntu-24.04
+
+    outputs:
+      mainigais1: ${{ steps.solis-izveidot-vertibu.outputs.mainigais1 }}
+    steps:
+      - name: Izveidot un eksportēt mainīgo
+        id: solis-izveidot-vertibu
+        run: |
+          # Piešķiram mainīgajam sākontējo vērtību
+          mainigais1=vertiba1
+
+          # 1) Saglabājam soļa izeju (output) priekš darba (job) izejas
+          echo "mainigais1=${mainigais1}" >> "$GITHUB_OUTPUT"
+
+          # 2) Saglabājam mainīgo kā darba (job) vides (environment) mainīgo, ne tikai soļa mainīgo
+          echo "MAINIGAIS1=${mainigais1}" >> "$GITHUB_ENV"
+
+      - name: Apskatīt mainīgos darba "producer" ietvaros
+        run: |
+          echo "MAINIGAIS1 (piešķirts caur GITHUB_ENV):   $MAINIGAIS1"
+          echo "mainigais1 (soļa izeja (output)):         ${{ steps.solis-izveidot-vertibu.outputs.mainigais1 }}"
+
+  consumer:
+    runs-on: ubuntu-24.04
+    needs: producer
+    steps:
+      - name: Apskatīt mainīgo vērtības darba "consumer" ietvaros (piezīme, MAINIGAIS1 nav definēts)
+        run: |
+          echo "Vertība no producer:        ${{ needs.producer.outputs.mainigais1 }}"
+          echo "MAINIGAIS1 vērtība darba "consumer" ietvaros:            ${MAINIGAIS1:-<UNSET>}"
