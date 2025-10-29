@@ -1,0 +1,16 @@
+name: 02-multi-jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sveiciens-no-bash:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Sveiciens no iekšējā bash skripta no GitHub Action Workflow!, kurš tika palaists uz Ubuntu 24.04"
+
+  sveiciens-no-python:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: print("Sveiciens no iekšējā Python skripta no GitHub Action Workflow!, kurš tika palaists uz Ubuntu 24.04")
+        shell: python
