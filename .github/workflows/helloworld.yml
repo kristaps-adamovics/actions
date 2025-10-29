@@ -1,0 +1,10 @@
+name: Hello World
+on:
+ workflow_dispatch:
+jobs:
+ say-hello-inline-bash:
+ runs-on: ubuntu-24.04
+ steps:
+5
+ - run: echo "Sveiciens no iekšējā bash skripta no GitHub Action Workflow!, kurš
+tika palaists uz Ubuntu 24.04"
